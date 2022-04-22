@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate  } from "react-router-dom";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
 
 export const Login = () => {
+  const navigate = useNavigate();
   const [formValues, handleInputChange, reset] = useForm({ username: "", password: "" });
   const { username, password } = formValues;
   const [rol, setRol] = useState("Estudiante");
 
   const verifyUser = () => {
-    console.log(username);
-    console.log(password);
-    console.log(rol);
+    if(username==="rocket1530" && password==="123456" && rol === "Maestro"){
+      const data = {
+        username,
+        password
+      }
+      reset();
+      localStorage.setItem("teacherProfile", JSON.stringify(data));
+      navigate("/teacherPublications");
+    }
     if (username !== "") {
       reset();
     }
