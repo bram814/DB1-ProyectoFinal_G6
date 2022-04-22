@@ -19,8 +19,8 @@ export const Login = () => {
   };
 
   return (
-    <div id="loginform">
-      <h2 id="headerTitle">Inicio de sesion</h2>
+    <div className="animate__animated animate__bounceInLeft" id="loginform">
+      <h2 id="headerTitle">Inicio de sesión</h2>
       <div>
         <div className="row">
           <label>Usuario</label>

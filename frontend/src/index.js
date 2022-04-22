@@ -1,8 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { Login } from "./Screens/Login.js";
+import { render } from "react-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import { Login } from "./Screens/Login";
+import { RegistryStudent } from "./Screens/RegistryStudent";
+import { RegistryTeacher } from "./Screens/RegistryTeacher";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <Login />
+render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/registryTeacher" element={<RegistryTeacher />} />
+      <Route path="/registryStudent" element={<RegistryStudent />} />
+    </Routes>
+  </BrowserRouter>,
+  document.getElementById("root")
 );
