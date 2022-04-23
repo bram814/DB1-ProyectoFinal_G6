@@ -1,0 +1,66 @@
+------------ INSERTAR UN ALUMNO ------------
+
+CREATE OR REPLACE PROCEDURE insert_alumno
+(
+    n1 IN ALUMNO.NOMBRE%TYPE,
+    n2 IN ALUMNO.apellido%TYPE,
+    n3 IN ALUMNO.carnet%TYPE,
+    n4 IN ALUMNO.telefono%TYPE,
+    n5 IN ALUMNO.direccion%TYPE,
+    n6 IN ALUMNO.correo%TYPE,
+    n7 IN ALUMNO.password%TYPE,
+    n8 IN ALUMNO.fecha_nacimiento%TYPE,
+    n9 IN ALUMNO.dpi%TYPE
+) 
+IS
+-- Declaracion de variables locales
+BEGIN
+-- Sentencias
+    INSERT INTO ALUMNO
+    (
+        nombre,
+        apellido,
+        carnet,
+        telefono,
+        direccion,
+        correo,
+        password,
+        fecha_nacimiento,
+        dpi
+    ) 
+    VALUES
+    (
+        n1,
+        n2,
+        n3,
+        n4,
+        n5,
+        n6,
+        n7,
+        n8,
+        n9
+    );
+
+--EXCEPTION
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE_APPLICATION_ERROR(-20001,
+                            'A OCURRIDO UN ERROR AL INSERTAR - ' ||
+                            SQLCODE || ' -ERROR- ' || SQLERRM);
+END insert_alumno;
+
+
+-- CALL PROCEDURE
+BEGIN
+   insert_alumno (
+    'jose1',
+    'solorzano1',
+    201800938,
+    '22222222',
+    'av b 8',
+    'abra8@gmail.com',
+    'pass',
+    '23-01-01',
+    '2356897992526'
+    );
+END;

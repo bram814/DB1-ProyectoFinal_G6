@@ -82,3 +82,51 @@ Configurar el SetJavaHome a la versión 8
 ```bash
 sudo gedit ~/.oraclesqldeveloperdatamodeler/21.4.1/product.conf
 ```
+
+
+
+# Procedimiento Almacenado
+
+
+```sql
+ -- Solicitamos todos los objetos que son procedimientos:
+ select *from user_objects where object_type='PROCEDURE';
+ -- Eliminar Procedure
+ DROP PROCEDURE name_procedure;
+```
+
+### Crear un Procedimiento Almacenado
+```sql
+    
+CREATE OR REPLACE PROCEDURE nombre_procedimiento
+(<param1> [IN|OUT|IN OUT] <type>,
+ <param2> [IN|OUT|IN OUT] <type>, ...)
+ 
+IS
+-- Declaracion de variables locales
+BEGIN
+-- Sentencias
+EXCEPTION
+-- Sentencias control de excepcion
+END nombre_procedimiento;
+
+Cuando crea un procedimiento o una función, puede definir parámetros. Hay tres tipos de parámetros que se pueden declarar:
+
+1) Parámetro de tipo IN: Estos tipos de parámetros se utilizan para enviar valores a procedimientos almacenados por lo tanto su valor de parámetro no puede ser reemplazado.
+
+2) Parámetro de tipo OUT: Estos tipos de parámetros se utilizan para obtener valores de los procedimientos almacenados. Por consiguiente es similar a un tipo de retorno en funciones.
+
+3) Parámetro IN OUT: Estos tipos de parámetros se utilizan para enviar valores aunque también para obtener valores en los procedimientos almacenados
+```
+
+### Llamada de un procedimiento almacenado
+
+```sql
+BEGIN
+   insert_alumno (
+    <param1>,
+    <param2>, ...
+    );
+END;
+```
+
