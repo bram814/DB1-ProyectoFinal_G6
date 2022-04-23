@@ -14,6 +14,7 @@ app.set('port', config.PORT);
 app.use(morgan('dev'));                         // Para desarrollador.
 app.use(express.json());                        // Las peticiones las va a devolver en formato json.
 app.use(express.urlencoded({extended:false}));  // Sirve para enviar fotos o videos, en este caso utilizaremos texto por eso es falso.
+app.use(cors());
 
 // Routes
 app.use(getRoute);
