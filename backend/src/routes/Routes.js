@@ -24,6 +24,15 @@ router.post('/registryStudent', async (req, res)=>{
 
 })
 
+router.post('/registryTeacher', async (req, res)=>{
+
+    var sql = `BEGIN insert_maestro ( '${req.body.nombre}','${req.body.apellido}','${req.body.telefono}','${req.body.direccion}','${req.body.correo}','${req.body.password}',${req.body.fecha_nacimiento},'${req.body.dpi}'); END;`
+    var result = await DB.Open(sql,[],true)
+    
+    res.status(200).send(JSON.stringify(result));
+
+})
+
 
 
 module.exports = router;
