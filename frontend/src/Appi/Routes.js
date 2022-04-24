@@ -43,3 +43,38 @@ export async function AddTeacher(n1,n2,n3,n4,n5,n6,n7,n8){ // verificar usuario
         }),
     });
 }
+
+
+const url_api3 = "http://localhost:5000/loginStudent";
+
+export async function GetLoginStudent(n1,n2){ // verificar usuario
+
+    return fetch(url_api3, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            carnet  : n1,
+            pass    : n2
+        }),
+    });
+}
+
+const url_api4 = "http://localhost:5000/loginTeacher";
+
+export async function GetLoginTeacher(n1,n2){ // verificar usuario
+
+    return fetch(url_api4, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            dpi  : n1,
+            pass    : n2
+        }),
+    });
+}

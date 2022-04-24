@@ -68,3 +68,45 @@ BEGIN
    insert_maestro ('nameMaestro2','apellido','56897412','av b 8','abra8@gmail.com','pass','23-01-01','3033199330108'); 
 
 END;
+
+
+------------ FUNCTION LOGIN ------------
+CREATE OR REPLACE FUNCTION fn_login_student (pCarnet IN ALUMNO.carnet%TYPE,  pPass IN ALUMNO.password%TYPE) RETURN ALUMNO.password%TYPE 
+IS vPass ALUMNO.password%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT password INTO vPass
+        FROM ALUMNO
+        WHERE password = pPass AND carnet = pCarnet; 
+
+    RETURN vPass;
+END fn_login_student;
+
+
+DECLARE
+    result_fn varchar2;
+BEGIN
+    result_fn := fn_login_student(201800937,'pass');
+    
+END;
+
+
+------------ FUNCTION LOGIN ------------
+CREATE OR REPLACE FUNCTION fn_login_teacher (pDpi IN MAESTRO.dpi%TYPE,  pPass IN MAESTRO.password%TYPE) RETURN MAESTRO.password%TYPE 
+IS vPass MAESTRO.password%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT password INTO vPass
+        FROM MAESTRO
+        WHERE password = pPass AND dpi = pDpi; 
+
+    RETURN vPass;
+END fn_login_teacher;
+
+
+DECLARE
+    result_fn varchar2;
+BEGIN
+    result_fn := fn_login_teacher(201800937,'pass');
+    
+END;

@@ -130,3 +130,22 @@ BEGIN
 END;
 ```
 
+
+### Crear una Funcion
+
+```sql   
+CREATE [OR REPLACE] FUNCTION NOMBRE_FUNCION
+[(
+   param1 |IN|OUT|IN OUT| TIPO_DATO,
+   param2 |IN|OUT|IN OUT| TIPO_DATO 
+), … ]
+RETURN TIPO_DATO
+IS | AS
+--Declaración de variables locales
+BEGIN
+--Declaración de Sentencia
+RETURN DATO;
+   [EXCEPTION TIPO_EXCEPCION]
+--Sentencias de control de excepción
+END [NOMBRE_FUNCION];
+```
