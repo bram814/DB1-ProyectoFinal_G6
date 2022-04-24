@@ -1,5 +1,5 @@
-const router = Router();
 const {Router} = require('express');
+const router = Router();
 const DB = require('../config/Config')
 
 
@@ -14,15 +14,16 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/oracle', async (req, res)=>{
-    sql = "SELECT * FROM Estudiante";
-    var result = await DB.PEDO(sql,[],false)
-    console.log(result)
-    res.status(200).json({
-        msg:"????"
-    });
+router.post('/registryStudent', async (req, res)=>{
+
+
+    var sql = `BEGIN insert_alumno ( '${req.body.nombre}','${req.body.apellido}',${req.body.carnet},'${req.body.telefono}','${req.body.direccion}','${req.body.correo}','${req.body.password}',${req.body.fecha_nacimiento},'${req.body.dpi}'); END;`
+    var result = await DB.Open(sql,[],true)
+
+    res.status(200).send(JSON.stringify(result));
 
 })
+
 
 
 module.exports = router;

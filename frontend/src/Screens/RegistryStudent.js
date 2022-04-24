@@ -1,6 +1,7 @@
 import React from 'react';
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
+import { AddStudent } from '../Appi/Routes';
 
 export const RegistryStudent = () => {
   const [ formValues, handleInputChange, reset ] = useForm(
@@ -16,15 +17,30 @@ export const RegistryStudent = () => {
   );
   const {name, lastname, carne, phone, direction, email, password} = formValues;
 
-  const verifyUser = () => {
-    console.log(name);
-    console.log(lastname);
-    console.log(carne);
-    console.log(phone);
-    console.log(direction);
-    console.log(email);
-    console.log(password);
+  const verifyUser = async () => {
+
     if(name!==""){
+
+      const SendBackend = await AddStudent(
+        name,
+        lastname,
+        carne,
+        phone,
+        direction,
+        email,
+        password,
+        'TO_DATE(\'2019-10-01\',\'YYYY-MM-DD\')',
+        '23561887878'
+      
+        )
+
+      const result = await SendBackend.json();
+      if(SendBackend.status === 200){
+          alert("Add")
+          console.log("Succesfully")
+      } else {
+          alert("Error")
+      }
       reset();
     }
   };

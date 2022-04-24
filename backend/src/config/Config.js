@@ -7,7 +7,7 @@
 */  
 const config = require('./env.js');
 const oracledb = require('oracledb');
-
+options = { outFormat: oracledb.OUT_FORMAT_OBJECT };
 db = {
     user: config.USERDB,
     password: config.PASS,
@@ -21,5 +21,4 @@ async function open(query, binds, autoCommit){
     return result;
 }
 
-exports.PEDO = open;
-
+exports.Open = open;
