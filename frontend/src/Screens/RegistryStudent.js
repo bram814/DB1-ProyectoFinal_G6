@@ -29,9 +29,7 @@ export const RegistryStudent = () => {
         direction,
         email,
         password,
-        'TO_DATE(\'2019-10-01\',\'YYYY-MM-DD\')',
-        '23561887878'
-      
+        'TO_DATE(\'2019-10-01\',\'YYYY-MM-DD\')'
         )
 
       const result = await SendBackend.json();
