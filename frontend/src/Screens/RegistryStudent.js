@@ -31,8 +31,7 @@ export const RegistryStudent = () => {
         password,
         'TO_DATE(\'2019-10-01\',\'YYYY-MM-DD\')',
         '23561887878'
-      
-        )
+      )
 
       const result = await SendBackend.json();
       if(SendBackend.status === 200){

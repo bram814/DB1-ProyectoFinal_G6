@@ -13,10 +13,12 @@ import { Publications } from "./Screens/teacherScreens/Publications.js";
 import { Activities } from "./Screens/teacherScreens/Activities.js";
 import { Exams } from "./Screens/teacherScreens/Exams.js";
 import { Students } from "./Screens/teacherScreens/Students.js";
+import { App } from "./App";
 
 render(
   <BrowserRouter>
     <Routes>
+      <Route path="/" element={<App />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registryTeacher" element={<RegistryTeacher />} />
       <Route path="/registryStudent" element={<RegistryStudent />} />
