@@ -14,6 +14,7 @@ import { Activities } from "./Screens/teacherScreens/Activities.js";
 import { Exams } from "./Screens/teacherScreens/Exams.js";
 import { Students } from "./Screens/teacherScreens/Students.js";
 import { App } from "./App";
+import { AdminScreen } from "./Screens/AdminScreens/AdminScreen";
 
 render(
   <BrowserRouter>
@@ -26,6 +27,7 @@ render(
       <Route path="/teacherActivities"  element={<Activities />} />
       <Route path="/teacherExams"  element={<Exams/>} />
       <Route path="/teacherStudents"  element={<Students />} />
+      <Route path="/admin"  element={<AdminScreen />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")
