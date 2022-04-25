@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "../css/Buttons.css";
 import "../css/Publications.css";
 import { useNavigate  } from "react-router-dom";
-import { AccordionPublications } from './components/AccordionPublications';
+import { AccordionTotal } from './components/AccordionTotal';
 import Swal from 'sweetalert2';
 
 const dataPrueba = [
@@ -10,17 +10,33 @@ const dataPrueba = [
     key: 1,
     title: "Titulo1",
     description: "Descripcion 1",
+    course: "Matematica",
     date: "10/12/2022"
   },{
     key: 2,
     title: "Titulo2",
     description: "Descripcion 2",
+    course: "Matematica",
     date: "10/12/2022"    
   },{
     key: 3,
     title: "Titulo3",
     description: "Descripcion 3",
+    course: "Matematica",
     date: "10/12/2022"
+  }
+];
+
+const dataCourses = [
+  {
+    id: 2,
+    name: "Matematica"
+  },{
+    id: 3,
+    name: "Quimica"
+  },{
+    id: 4,
+    name: "Ipc"
   }
 ];
 
@@ -48,6 +64,7 @@ export const Publications = () => {
   };
 
   const addPublication = async () => {
+    //Obtenemos la información de titulo y descripcion de la nueva publicacion mediante sweetAlert2
     const { value: formValues } = await Swal.fire({
       title: 'Ingrese su publicacion',
       html:
@@ -62,12 +79,39 @@ export const Publications = () => {
           document.getElementById('swal-input2').value
         ]
       }
-    })
+    });
+
+    if(!formValues) return;
     
-    if (formValues) {
+    //Armamos el objeto de opciones
+    let options = {};
+    for(let option of dataCourses){
+        options[option.id] = option.name;
+    }
+    //Obtenemos la información de la materia de la nueva publicacion mediante sweetAlert2
+    const { value: course } = await Swal.fire({
+      title: 'Elige la materia de la publicacion',
+      input: 'select',
+      inputOptions: options,
+      inputPlaceholder: 'Materias',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value !== '') {
+            resolve();
+          } else {
+            resolve('Debe elegir una materia');
+          }
+        });
+      }
+    });
+
+    //Verificamos que se haya ingresado ambos campos
+    if (formValues && course) {
       const newPublication = {
         key: pubs[pubs.length-1].key+1,
         title: formValues[0],
+        course: options[course],    //Course es el id de la materia
         description: formValues[1],
         date: "Fecha random"
       }
@@ -78,9 +122,9 @@ export const Publications = () => {
     }
   }
 
-  const deletePublication = async (id) => {
+  const deleteItem = async (id) => {
     Swal.fire({
-      title: '¿Esta segudo que desea borrar la publicación?',
+      title: '¿Esta seguro que desea borrar la publicación?',
       text: "Una vez realizada esta acción no se podrá revertir",
       icon: 'warning',
       showCancelButton: true,
@@ -98,7 +142,7 @@ export const Publications = () => {
     })
   }
 
-  const editPublication = async (id) => {
+  const editItem = async (id) => {
     const value = pubs.filter(dato=>dato.key===id);
     const { title, description } = value[0];
     const { value: formValues } = await Swal.fire({
@@ -155,7 +199,7 @@ export const Publications = () => {
         Publicaciones realizadas
       </h1>
       <div className="container accordionPublications">
-        <AccordionPublications data={pubs} deletePublication={deletePublication} editPublication={editPublication}/>
+        <AccordionTotal data={pubs} deleteItem={deleteItem} editItem={editItem} nameItem="publicacion"/>
       </div>
       <button onClick={addPublication} className="btn btn-success button-75 animate__animated animate__fadeInTopLeft">
         Agregar publicacion
