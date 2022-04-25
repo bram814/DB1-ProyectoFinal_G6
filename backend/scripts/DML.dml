@@ -9,37 +9,18 @@ CREATE OR REPLACE PROCEDURE insert_alumno
     n5 IN ALUMNO.direccion%TYPE,
     n6 IN ALUMNO.correo%TYPE,
     n7 IN ALUMNO.password%TYPE,
-    n8 IN ALUMNO.fecha_nacimiento%TYPE,
-    n9 IN ALUMNO.dpi%TYPE
+    n8 IN ALUMNO.fecha_nacimiento%TYPE
 ) 
 IS
 -- Declaracion de variables locales
+icount number;--lo que sea
 BEGIN
 -- Sentencias
-    INSERT INTO ALUMNO
-    (
-        nombre,
-        apellido,
-        carnet,
-        telefono,
-        direccion,
-        correo,
-        password,
-        fecha_nacimiento,
-        dpi
-    ) 
-    VALUES
-    (
-        n1,
-        n2,
-        n3,
-        n4,
-        n5,
-        n6,
-        n7,
-        n8,
-        n9
-    );
+    SELECT count(*) INTO icount FROM ALUMNO WHERE carnet = n3;
+    IF icount = 0 then
+        INSERT INTO ALUMNO (nombre,apellido,carnet,telefono,direccion,correo,password,fecha_nacimiento) 
+            VALUES (n1,n2,n3,n4,n5,n6,n7,n8);
+    END IF;
 
 --EXCEPTION
 EXCEPTION
@@ -52,15 +33,80 @@ END insert_alumno;
 
 -- CALL PROCEDURE
 BEGIN
-   insert_alumno (
-    'jose1',
-    'solorzano1',
-    201800938,
-    '22222222',
-    'av b 8',
-    'abra8@gmail.com',
-    'pass',
-    '23-01-01',
-    '2356897992526'
-    );
+   insert_alumno ('jose1','solorzano1',201800938,'22222222','av b 8','abra8@gmail.com','pass','23-01-01');
+END;
+
+
+------------ INSERTAR UN MAESTRO ------------
+CREATE OR REPLACE PROCEDURE insert_maestro
+(
+    n1 IN MAESTRO.nombre%TYPE,
+    n2 IN MAESTRO.apellido%TYPE,
+    n3 IN MAESTRO.telefono%TYPE,
+    n4 IN MAESTRO.direccion%TYPE,
+    n5 IN MAESTRO.correo%TYPE,
+    n6 IN MAESTRO.password%TYPE,
+    n7 IN MAESTRO.fecha_nacimiento%TYPE,
+    n8 IN MAESTRO.dpi%TYPE
+) 
+IS
+-- Declaracion de variables locales
+icount number;--lo que sea
+BEGIN
+
+-- Sentencias
+    SELECT count(*) INTO icount FROM MAESTRO WHERE dpi = n8;
+    IF icount = 0 then
+        INSERT INTO MAESTRO (nombre,apellido,telefono,direccion,correo,password,fecha_nacimiento,dpi)
+            VALUES (n1,n2,n3,n4,n5,n6,n7,n8);
+    END IF;
+    
+END insert_maestro;
+
+
+BEGIN
+   insert_maestro ('nameMaestro2','apellido','56897412','av b 8','abra8@gmail.com','pass','23-01-01','3033199330108'); 
+
+END;
+
+
+------------ FUNCTION LOGIN ------------
+CREATE OR REPLACE FUNCTION fn_login_student (pCarnet IN ALUMNO.carnet%TYPE,  pPass IN ALUMNO.password%TYPE) RETURN ALUMNO.password%TYPE 
+IS vPass ALUMNO.password%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT password INTO vPass
+        FROM ALUMNO
+        WHERE password = pPass AND carnet = pCarnet; 
+
+    RETURN vPass;
+END fn_login_student;
+
+
+DECLARE
+    result_fn varchar2;
+BEGIN
+    result_fn := fn_login_student(201800937,'pass');
+    
+END;
+
+
+------------ FUNCTION LOGIN ------------
+CREATE OR REPLACE FUNCTION fn_login_teacher (pDpi IN MAESTRO.dpi%TYPE,  pPass IN MAESTRO.password%TYPE) RETURN MAESTRO.password%TYPE 
+IS vPass MAESTRO.password%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT password INTO vPass
+        FROM MAESTRO
+        WHERE password = pPass AND dpi = pDpi; 
+
+    RETURN vPass;
+END fn_login_teacher;
+
+
+DECLARE
+    result_fn varchar2;
+BEGIN
+    result_fn := fn_login_teacher(201800937,'pass');
+    
 END;

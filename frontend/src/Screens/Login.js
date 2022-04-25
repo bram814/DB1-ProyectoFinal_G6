@@ -4,6 +4,7 @@ import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
+import { GetLoginStudent, GetLoginTeacher } from '../Appi/Routes';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export const Login = () => {
   const { username, password } = formValues;
   const [rol, setRol] = useState("Estudiante");
 
-  const verifyUser = () => {
+  const verifyUser = async () => {
     if(username==="rocket1530" && password==="123456" && rol === "Maestro"){
       const data = {
         username,
@@ -21,7 +22,54 @@ export const Login = () => {
       localStorage.setItem("teacherProfile", JSON.stringify(data));
       navigate("/teacherPublications");
     }
-    if (username !== "") {
+
+    if (username !== "" && password !== "") {
+      
+      if (rol === "Estudiante") {
+
+        const SendBackend = await GetLoginStudent(username, password);
+        const result = await SendBackend.json();
+  
+        if (SendBackend.status === 200) {
+          alert(result);
+
+        } else {
+          alert(result);
+        }
+
+      } else if(rol === "Maestro") {
+
+        const SendBackend = await GetLoginTeacher(username, password);
+        const result = await SendBackend.json();
+  
+        if (SendBackend.status === 200) {
+          alert(result);
+          const data = {
+            username,
+            password
+          }
+          reset();
+          localStorage.setItem("teacherProfile", JSON.stringify(data));
+          navigate("/teacherPublications");
+
+        } else {
+          alert(result);
+        }
+
+      } else if (rol === "Administrador") {
+        
+        if (username === "admin" && password === "admin"){
+          alert("Welcome Admin!");
+        
+        } else {
+          alert("User/Password Admin Wrong!!")
+        }
+
+      }
+     
+     
+     
+
       reset();
     }
   };

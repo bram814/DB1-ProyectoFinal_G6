@@ -1,6 +1,7 @@
 import React from 'react';
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
+import { AddTeacher } from '../Appi/Routes';
 
 export const RegistryTeacher = () => {
     const [formValues, handleInputChange, reset] = useForm(
@@ -19,17 +20,17 @@ export const RegistryTeacher = () => {
     );
     const { name, lastname, registry, phone, direction, email, bornDate, DPI, profilePicture, password } = formValues;
 
-    const verifyUser = () => {
-        console.log(name);
-        console.log(lastname);
-        console.log(registry);
-        console.log(phone);
-        console.log(direction);
-        console.log(email);
-        console.log(bornDate);
-        console.log(DPI);
-        console.log(password);
+    const verifyUser = async () => {
+
         if (name !== "") {
+            var aux = `TO_DATE(\'${bornDate}',\'YYYY-MM-DD\')`
+            const SendBackend = await AddTeacher(name,lastname,phone,direction,email,password,aux,DPI)
+            const result = await SendBackend.json();
+
+            if (SendBackend.status === 200) {
+                alert("Teacher Add!")
+            } 
+
             reset();
         }
     };
@@ -112,11 +113,11 @@ export const RegistryTeacher = () => {
                     />
                 </div>
                 <div className="row">
-                    <label>Fecha de nacimiento</label>
+                    <label>Fecha de nacimiento [YYYY-MM-DD</label>
                     <input
                         name="bornDate"
                         type="text"
-                        placeholder="Fecha de nacimiento"
+                        placeholder="Fecha de nacimiento [YYYY-MM-DD]"
                         value={bornDate}
                         onChange={handleInputChange}
                     />
