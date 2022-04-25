@@ -4,7 +4,7 @@ import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
-import { GetLoginStudent, GetLoginTeacher } from '../Appi/Routes';
+import { GetLoginStudent, GetLoginTeacher } from '../Api/Routes';
 
 export const Login = () => {
   const navigate = useNavigate();

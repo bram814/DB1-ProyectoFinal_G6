@@ -1,7 +1,8 @@
 import React from 'react';
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
-import { AddStudent } from '../Appi/Routes';
+import { AddStudent } from '../Api/Routes';
+import Swal from 'sweetalert2';
 
 export const RegistryStudent = () => {
   const [ formValues, handleInputChange, reset ] = useForm(
@@ -20,25 +21,21 @@ export const RegistryStudent = () => {
 
   const verifyUser = async () => {
     if(name!==""){
-      var aux = `TO_DATE(\'${bornDate}',\'YYYY-MM-DD\')`
-      const SendBackend = await AddStudent(
-        name,
-        lastname,
-        carne,
-        phone,
-        direction,
-        email,
-        password,
-        'TO_DATE(\'2019-10-01\',\'YYYY-MM-DD\')',
-        '23561887878'
-      )
+      const SendBackend = await AddStudent(name, lastname, carne, phone, direction, email, password);
 
-      const result = await SendBackend.json();
+      await SendBackend.json();
       if(SendBackend.status === 200){
-          alert("Add")
-          console.log("Succesfully")
+        Swal.fire(
+          'Exito',
+          'Se ha registrado el nuevo estudiante',
+          'success'
+        );
       } else {
-          alert("Error")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ha habido un error al ingresar al estudiante',
+        });
       }
       reset();
     }

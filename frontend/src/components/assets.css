@@ -317,7 +317,7 @@ Ensure the default browser behavior of the `hidden` attribute.
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  background-color: rgb(255, 0, 170);
+  background-color: rgb(255, 255, 255);
   border-color: #64748b;
   border-width: 1px;
   border-radius: 0px;
@@ -395,7 +395,7 @@ select {
   height: 1rem;
   width: 1rem;
   color: #2563eb;
-  background-color: rgb(255, 0, 225);
+  background-color: rgb(255, 255, 255);
   border-color: #64748b;
   border-width: 1px;
   --tw-shadow: 0 0 #0000;

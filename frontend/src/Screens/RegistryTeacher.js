@@ -1,7 +1,8 @@
 import React from 'react';
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
-import { AddTeacher } from '../Appi/Routes';
+import { AddTeacher } from '../Api/Routes';
+import Swal from 'sweetalert2';
 
 export const RegistryTeacher = () => {
     const [formValues, handleInputChange, reset] = useForm(
@@ -12,7 +13,7 @@ export const RegistryTeacher = () => {
             phone: "",
             direction: "",
             email: "",
-            bornDate: "",
+            bornDate: "2022-04-25",
             DPI: "",
             profilePicture: "",
             password: ""
@@ -21,14 +22,18 @@ export const RegistryTeacher = () => {
     const { name, lastname, registry, phone, direction, email, bornDate, DPI, profilePicture, password } = formValues;
 
     const verifyUser = async () => {
-
         if (name !== "") {
-            var aux = `TO_DATE(\'${bornDate}',\'YYYY-MM-DD\')`
-            const SendBackend = await AddTeacher(name,lastname,phone,direction,email,password,aux,DPI)
-            const result = await SendBackend.json();
+            let aux = `TO_DATE('${bornDate}','YYYY-MM-DD')`;
+            console.log(bornDate);
+            const SendBackend = await AddTeacher(name, lastname, phone, direction, email, password, aux, DPI);
+            await SendBackend.json();
 
             if (SendBackend.status === 200) {
-                alert("Teacher Add!")
+                Swal.fire(
+                    'Exito',
+                    'Se ha registrado el nuevo maestro',
+                    'success'
+                );
             } 
 
             reset();
@@ -113,12 +118,10 @@ export const RegistryTeacher = () => {
                     />
                 </div>
                 <div className="row">
-                    <label>Fecha de nacimiento [YYYY-MM-DD</label>
-                    <input
-                        name="bornDate"
-                        type="text"
-                        placeholder="Fecha de nacimiento [YYYY-MM-DD]"
+                    <label>Fecha de nacimiento</label>
+                    <input type="date" id="start" name="bornDate"
                         value={bornDate}
+                        min="0000-00-00" max="2022-12-31"
                         onChange={handleInputChange}
                     />
                 </div>
