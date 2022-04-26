@@ -16,6 +16,7 @@ export const ItemAccordion = (props) => {
                         <p>Fecha: {item.date}</p>
                     </div>
                     :
+                    nameItem === "actividad" ?
                     <div>
                         <p>Descripcion: {item.description}</p>
                         <p>Materia: {item.course}</p>
@@ -24,6 +25,13 @@ export const ItemAccordion = (props) => {
                         <p>Alumnos asignados: {item.students}</p>
                         <p>Valor: {item.value}</p>
                         <p>Fecha de entrega: {item.delivery_date}</p>
+                    </div>
+                    :
+                    <div>
+                        <p>Materia: {item.course}</p>
+                        <p>Fecha de realización: {item.publish_date}</p>
+                        <p>Hora de inicio: {item.hour_begin}</p>
+                        <p>Hora de finalización: {item.hour_final}</p>
                     </div>
                 }
                 <button 

@@ -77,7 +77,7 @@ export const Activities = () => {
 
   const addActvitie = async () => {
     const { value: formValues } = await Swal.fire({
-      title: 'Ingrese su publicacion',
+      title: 'Ingrese su actividad',
       html:
         '<h2>Titulo:</h2>' +
         '<input id="swal-input1" class="swal2-input">' +
@@ -85,7 +85,7 @@ export const Activities = () => {
         '<textarea id="swal-input2" class="swal2-input"></textarea>' +
         '<h2>Fecha</h2>' +
         '<input type="date" id="swal-input3" class="swal-input3"/>' +
-        '<h2>Fecha de publicacion</h2>' +
+        '<h2>Fecha de la actividad</h2>' +
         '<input type="date" id="swal-input4" class="swal-input4"/>' +
         '<h2>Valor de la actividad:</h2>' +
         '<input id="swal-input5" class="swal2-input">' +
@@ -114,7 +114,7 @@ export const Activities = () => {
     
     //Obtenemos la información de la materia de la nueva publicacion mediante sweetAlert2
     const { value: course } = await Swal.fire({
-      title: 'Elige la materia de la publicacion',
+      title: 'Elige la materia de la actividad',
       input: 'select',
       inputOptions: options,
       inputPlaceholder: 'Materias',
@@ -151,7 +151,7 @@ export const Activities = () => {
 
   const deleteItem = async (id) => {
     Swal.fire({
-      title: '¿Esta segudo que desea borrar la publicación?',
+      title: '¿Esta segudo que desea borrar la actividad?',
       text: "Una vez realizada esta acción no se podrá revertir",
       icon: 'warning',
       showCancelButton: true,
@@ -162,7 +162,7 @@ export const Activities = () => {
       if (result.isConfirmed) {
         Swal.fire(
           'Eliminada',
-          'La publicación ha sido eliminada',
+          'La actividad ha sido eliminada',
           'success'
         )
       }
@@ -170,34 +170,50 @@ export const Activities = () => {
   }
 
   const editItem = async (id) => {
-    const value = activities.filter(dato => dato.key === id);
-    const { title, description } = value[0];
+    const data = activities.filter(dato => dato.key === id);
+    const { title, description, date, publish_date, value, delivery_date } = data[0];
     const { value: formValues } = await Swal.fire({
-      title: 'Ingrese los nuevos valores de su publicación',
+      title: 'Ingrese los nuevos valores de su actividad',
       html:
         '<h2>Titulo:</h2>' +
         `<input id="swal-input1" class="swal2-input" value=${title}>` +
         '<h2>Descripcion:</h2>' +
-        `<textarea id="swal-input2" class="swal2-input">${description}</textarea>`,
+        `<textarea id="swal-input2" class="swal2-input">${description}</textarea>` +
+        '<h2>Fecha</h2>' +
+        `<input type="date" id="swal-input3" class="swal-input3" value=${date}/>` +
+        '<h2>Fecha de actividad</h2>' +
+        `<input type="date" id="swal-input4" class="swal-input4" value=${publish_date}/>` +
+        '<h2>Valor de la actividad:</h2>' +
+        `<input id="swal-input5" class="swal2-input" value=${value}>` +
+        '<h2>Fecha de entrega</h2>' +
+        `<input type="date" id="swal-input6" class="swal-input6" value=${delivery_date}/>`,
       focusConfirm: false,
       preConfirm: () => {
         return [
           document.getElementById('swal-input1').value,
-          document.getElementById('swal-input2').value
+          document.getElementById('swal-input2').value,
+          document.getElementById('swal-input3').value,
+          document.getElementById('swal-input4').value,
+          document.getElementById('swal-input5').value,
+          document.getElementById('swal-input6').value,
         ]
       }
     })
 
     if (formValues) {
-      const newPublication = {
-        key: activities[activities.length - 1].key + 1,
+      const newActivitie = {
+        key: id,
         title: formValues[0],
         description: formValues[1],
-        date: "Fecha random"
+        date: formValues[2],
+        publish_date: formValues[3],
+        value: formValues[4],
+        delivery_date: formValues[5]
       }
-      setActivities([...activities, newPublication]);
-      Swal.fire('Good job!',
-        'You clicked the button!',
+      console.log(newActivitie);
+      //setActivities([...activities, newPublication]); Aqui hacemos el update
+      Swal.fire("Exito",
+        'Se ha actualizado la actividad',
         'success');
     }
   }

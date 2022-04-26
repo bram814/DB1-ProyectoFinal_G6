@@ -168,7 +168,8 @@ export const Publications = () => {
         description: formValues[1],
         date: "Fecha random"
       }
-      setPubs([...pubs, newPublication]);
+      console.log(newPublication);
+      //setPubs([...pubs, newPublication]); Aqui se hace el update
       Swal.fire(  'Good job!',
       'You clicked the button!',
       'success')
