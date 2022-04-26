@@ -1,5 +1,5 @@
 ------------ INSERTAR UN ALUMNO ------------
-
+DROP PROCEDURE insert_alumno;
 CREATE OR REPLACE PROCEDURE insert_alumno
 (
     n1 IN ALUMNO.NOMBRE%TYPE,
@@ -8,8 +8,7 @@ CREATE OR REPLACE PROCEDURE insert_alumno
     n4 IN ALUMNO.telefono%TYPE,
     n5 IN ALUMNO.direccion%TYPE,
     n6 IN ALUMNO.correo%TYPE,
-    n7 IN ALUMNO.password%TYPE,
-    n8 IN ALUMNO.fecha_nacimiento%TYPE
+    n7 IN ALUMNO.password%TYPE
 ) 
 IS
 -- Declaracion de variables locales
@@ -18,8 +17,8 @@ BEGIN
 -- Sentencias
     SELECT count(*) INTO icount FROM ALUMNO WHERE carnet = n3;
     IF icount = 0 then
-        INSERT INTO ALUMNO (nombre,apellido,carnet,telefono,direccion,correo,password,fecha_nacimiento) 
-            VALUES (n1,n2,n3,n4,n5,n6,n7,n8);
+        INSERT INTO ALUMNO (nombre,apellido,carnet,telefono,direccion,correo,password) 
+            VALUES (n1,n2,n3,n4,n5,n6,n7);
     END IF;
 
 --EXCEPTION
@@ -33,7 +32,7 @@ END insert_alumno;
 
 -- CALL PROCEDURE
 BEGIN
-   insert_alumno ('jose1','solorzano1',201800938,'22222222','av b 8','abra8@gmail.com','pass','23-01-01');
+   insert_alumno ('jose1','solorzano1',201800938,'22222222','av b 8','abra8@gmail.com','pass');
 END;
 
 

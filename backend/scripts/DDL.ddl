@@ -29,8 +29,7 @@ CREATE TABLE alumno (
     telefono         VARCHAR2(20 CHAR) NOT NULL,
     direccion        VARCHAR2(100 CHAR) NOT NULL,
     correo           VARCHAR2(50 CHAR) NOT NULL,
-    password         VARCHAR2(50 CHAR) NOT NULL,
-    fecha_nacimiento DATE NOT NULL
+    password         VARCHAR2(50 CHAR) NOT NULL
 );
 
 ALTER TABLE alumno ADD CONSTRAINT alumno_pk PRIMARY KEY ( id_alumno );
