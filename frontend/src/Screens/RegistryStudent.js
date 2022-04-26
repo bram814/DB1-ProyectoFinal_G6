@@ -67,7 +67,7 @@ export const RegistryStudent = () => {
           Admin - Estudiantes
       </h3>
       <div className="animate__animated animate__bounceInLeft registryStudent">
-        <h2 id="headerTitle">Ceear Estudiante</h2>
+        <h2 id="headerTitle">Cear Estudiante</h2>
         <div>
           <div className="row">
             <label>Nombre</label>

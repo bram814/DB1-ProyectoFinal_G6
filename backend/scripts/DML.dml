@@ -181,3 +181,78 @@ END fn_login_teacher;
 --     result_fn := fn_login_teacher(201800937,'pass');
     
 -- END;
+
+------------ UPDATE TEACHER ------------
+DROP FUNCTION fn_search_teacher;
+CREATE OR REPLACE FUNCTION fn_search_teacher (pDpi IN MAESTRO.DPI%TYPE) RETURN MAESTRO.DPI%TYPE 
+IS vPass MAESTRO.DPI%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT fecha_nacimiento INTO vPass
+        FROM MAESTRO
+        WHERE dpi = pDpi; 
+
+    RETURN vPass;
+END fn_search_teacher;
+
+
+
+DROP PROCEDURE update_teacher;
+CREATE OR REPLACE PROCEDURE update_teacher
+(
+    pNombre    IN MAESTRO.NOMBRE%TYPE,
+    pApellido  IN MAESTRO.APELLIDO%TYPE,
+    pTelefono  IN MAESTRO.TELEFONO%TYPE,
+    pDireccion IN MAESTRO.DIRECCION%TYPE,
+    pCorreo    IN MAESTRO.CORREO%TYPE,
+    pPassword  IN MAESTRO.PASSWORD%TYPE,
+    pFecha     IN MAESTRO.DPI%TYPE,
+    pDpi       IN MAESTRO.DPI%TYPE
+) 
+IS
+BEGIN
+-- Sentencias
+    IF pNombre <> ' ' THEN
+
+        UPDATE MAESTRO
+        SET MAESTRO.NOMBRE = pNombre
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+    
+    IF pApellido <> ' ' THEN
+        UPDATE MAESTRO
+        SET MAESTRO.APELLIDO = pApellido
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+    
+    IF pTelefono <> ' ' THEN
+        UPDATE MAESTRO
+        SET MAESTRO.TELEFONO = pTelefono
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+    
+    IF pDireccion <> ' ' THEN
+        UPDATE MAESTRO
+        SET MAESTRO.DIRECCION = pDireccion
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+    
+    IF pCorreo <> ' ' THEN
+        UPDATE MAESTRO
+        SET MAESTRO.CORREO = pCorreo
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+
+    IF pPassword <> ' ' THEN
+        UPDATE MAESTRO
+        SET MAESTRO.PASSWORD = pPassword
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+    
+    IF pFecha <> ' ' THEN
+        UPDATE MAESTRO
+        SET MAESTRO.FECHA_NACIMIENTO =  TO_DATE(pFecha,'YYYY-MM-DD')
+        WHERE MAESTRO.DPI = pDpi;
+    END IF;
+
+END update_teacher;

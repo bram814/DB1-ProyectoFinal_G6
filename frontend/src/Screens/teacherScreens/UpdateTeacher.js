@@ -1,7 +1,7 @@
 import React from 'react';
 import './../css/Login.css'
 import { useForm } from '../../Hooks/useForm';
-// import { AddTeacher } from '../Api/Routes';
+import { SetUpdateTeacher } from '../../Api/ModAdministrador';
 import Swal from 'sweetalert2';
 import { useNavigate  } from "react-router-dom";
 
@@ -24,22 +24,27 @@ export const UpdateTeacher = () => {
     const { name, lastname, registry, phone, direction, email, bornDate, DPI, profilePicture, password } = formValues;
 
     const verifyUser = async () => {
-        if (name !== "") {
-            // let aux = `TO_DATE('${bornDate}','YYYY-MM-DD')`;
-            // console.log(bornDate);
-            // const SendBackend = await AddTeacher(name, lastname, phone, direction, email, password, aux, DPI);
-            // await SendBackend.json();
 
-            // if (SendBackend.status === 200) {
-            //     Swal.fire(
-            //         'Exito',
-            //         'Se ha registrado el nuevo maestro',
-            //         'success'
-            //     );
-            // } 
+        console.log(bornDate);
+        const SendBackend = await SetUpdateTeacher(name, lastname, phone, direction, email, password, bornDate, DPI);
 
-            reset();
+        var result = await SendBackend.json();
+        if(SendBackend.status === 200){
+        Swal.fire(
+            'Exito',
+            result,
+            'success'
+        );
+        } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: result,
+        });
         }
+
+        reset();
+        
     };
 
     const readFile = (e) => {
