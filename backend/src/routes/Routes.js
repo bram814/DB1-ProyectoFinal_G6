@@ -69,6 +69,26 @@ router.post('/loginTeacher', async (req, res)=>{
 
 })
 
+router.post('/updateStudent', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_student(${req.body.carnet}); END;`
+        var result = await DB.Open(sql,[],false)
+
+        sql = `BEGIN update_alumno ( '${req.body.nombre}','${req.body.apellido}',${req.body.carnet},'${req.body.telefono}','${req.body.direccion}','${req.body.correo}','${req.body.password}'); END;`
+        console.log(sql)
+        result = await DB.Open(sql,[],true)
+
+        res.status(200).send(JSON.stringify(`Estudiante Editado!!`));
+    } catch(e) {
+
+        res.status(404).send(JSON.stringify("No existe ese Estudiante!!"));
+    }
+
+})
+
+
 
 
 

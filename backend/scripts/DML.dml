@@ -31,12 +31,82 @@ END insert_alumno;
 
 
 -- CALL PROCEDURE
+-- BEGIN
+--    insert_alumno ('jose1','solorzano1',201800938,'22222222','av b 8','abra8@gmail.com','pass');
+-- END;
+
+------------ UPDATE STUDENT ------------
+DROP FUNCTION fn_search_student;
+CREATE OR REPLACE FUNCTION fn_search_student (pCarnet IN ALUMNO.carnet%TYPE) RETURN ALUMNO.carnet%TYPE 
+IS vPass ALUMNO.carnet%TYPE; 
+--Declaración de variables locales
 BEGIN
-   insert_alumno ('jose1','solorzano1',201800938,'22222222','av b 8','abra8@gmail.com','pass');
-END;
+        SELECT carnet INTO vPass
+        FROM ALUMNO
+        WHERE carnet = pCarnet; 
+
+    RETURN vPass;
+END fn_search_student;
+
+
+DROP PROCEDURE update_alumno;
+CREATE OR REPLACE PROCEDURE update_alumno
+(
+    pNombre    IN ALUMNO.NOMBRE%TYPE,
+    pApellido  IN ALUMNO.APELLIDO%TYPE,
+    pCarnet    IN ALUMNO.CARNET%TYPE,
+    pTelefono  IN ALUMNO.TELEFONO%TYPE,
+    pDireccion IN ALUMNO.DIRECCION%TYPE,
+    pCorreo    IN ALUMNO.CORREO%TYPE,
+    pPassword  IN ALUMNO.PASSWORD%TYPE
+) 
+IS
+-- Declaracion de variables locales
+icount number;--lo que sea
+BEGIN
+-- Sentencias
+    IF pNombre <> ' ' THEN
+
+        UPDATE ALUMNO
+        SET ALUMNO.NOMBRE = pNombre
+        WHERE ALUMNO.CARNET = pCarnet;
+    END IF;
+    
+    IF pApellido <> ' ' THEN
+        UPDATE ALUMNO
+        SET ALUMNO.APELLIDO = pApellido
+        WHERE ALUMNO.CARNET = pCarnet;
+    END IF;
+    
+    IF pTelefono <> ' ' THEN
+        UPDATE ALUMNO
+        SET ALUMNO.TELEFONO = pTelefono
+        WHERE ALUMNO.CARNET = pCarnet;
+    END IF;
+    
+    IF pDireccion <> ' ' THEN
+        UPDATE ALUMNO
+        SET ALUMNO.DIRECCION = pDireccion
+        WHERE ALUMNO.CARNET = pCarnet;
+    END IF;
+    
+    IF pCorreo <> ' ' THEN
+        UPDATE ALUMNO
+        SET ALUMNO.CORREO = pCorreo
+        WHERE ALUMNO.CARNET = pCarnet;
+    END IF;
+
+    IF pPassword <> ' ' THEN
+        UPDATE ALUMNO
+        SET ALUMNO.PASSWORD = pPassword
+        WHERE ALUMNO.CARNET = pCarnet;
+    END IF;
+    
+END update_alumno;
 
 
 ------------ INSERTAR UN MAESTRO ------------
+DROP PROCEDURE insert_maestro;
 CREATE OR REPLACE PROCEDURE insert_maestro
 (
     n1 IN MAESTRO.nombre%TYPE,
@@ -63,13 +133,14 @@ BEGIN
 END insert_maestro;
 
 
-BEGIN
-   insert_maestro ('nameMaestro2','apellido','56897412','av b 8','abra8@gmail.com','pass','23-01-01','3033199330108'); 
+-- BEGIN
+--    insert_maestro ('nameMaestro2','apellido','56897412','av b 8','abra8@gmail.com','pass','23-01-01','3033199330108'); 
 
-END;
+-- END;
 
 
 ------------ FUNCTION LOGIN ------------
+DROP FUNCTION fn_login_student;
 CREATE OR REPLACE FUNCTION fn_login_student (pCarnet IN ALUMNO.carnet%TYPE,  pPass IN ALUMNO.password%TYPE) RETURN ALUMNO.password%TYPE 
 IS vPass ALUMNO.password%TYPE; 
 --Declaración de variables locales
@@ -91,6 +162,7 @@ END;
 
 
 ------------ FUNCTION LOGIN ------------
+DROP FUNCTION fn_login_teacher;
 CREATE OR REPLACE FUNCTION fn_login_teacher (pDpi IN MAESTRO.dpi%TYPE,  pPass IN MAESTRO.password%TYPE) RETURN MAESTRO.password%TYPE 
 IS vPass MAESTRO.password%TYPE; 
 --Declaración de variables locales
@@ -103,9 +175,9 @@ BEGIN
 END fn_login_teacher;
 
 
-DECLARE
-    result_fn varchar2;
-BEGIN
-    result_fn := fn_login_teacher(201800937,'pass');
+-- DECLARE
+--     result_fn varchar2;
+-- BEGIN
+--     result_fn := fn_login_teacher(201800937,'pass');
     
-END;
+-- END;

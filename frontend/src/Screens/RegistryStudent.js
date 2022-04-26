@@ -14,12 +14,11 @@ export const RegistryStudent = () => {
       carne: "",
       phone: "",
       direction: "",
-      bornDate: "",
       email: "",
       password: ""
     }
   );
-  const {name, lastname, carne, phone, direction, bornDate, email, password} = formValues;
+  const {name, lastname, carne, phone, direction, email, password} = formValues;
 
   const verifyUser = async () => {
     if(name!==""){
@@ -68,7 +67,7 @@ export const RegistryStudent = () => {
           Admin - Estudiantes
       </h3>
       <div className="animate__animated animate__bounceInLeft registryStudent">
-        <h2 id="headerTitle">Registro de estudiante</h2>
+        <h2 id="headerTitle">Ceear Estudiante</h2>
         <div>
           <div className="row">
             <label>Nombre</label>
@@ -118,16 +117,6 @@ export const RegistryStudent = () => {
               placeholder="Dirección del estudiante"
               value={direction}
               onChange={handleInputChange}
-            />
-          </div>
-          <div className="row">
-            <label>Fecha de nacimiento [YYYY-MM-DD</label>
-            <input
-                name="bornDate"
-                type="text"
-                placeholder="Fecha de nacimiento [YYYY-MM-DD]"
-                value={bornDate}
-                onChange={handleInputChange}
             />
           </div>
           <div className="row">

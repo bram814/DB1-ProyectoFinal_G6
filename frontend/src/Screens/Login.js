@@ -5,6 +5,7 @@ import "react-widgets/styles.css";
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
 import { GetLoginStudent, GetLoginTeacher } from '../Api/Routes';
+import Swal from 'sweetalert2';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -31,10 +32,18 @@ export const Login = () => {
         const result = await SendBackend.json();
   
         if (SendBackend.status === 200) {
-          alert(result);
+          Swal.fire(
+            'Exito',
+            'Welcome Student!',
+            'success'
+          );
 
         } else {
-          alert(result);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: result,
+          });
         }
 
       } else if(rol === "Maestro") {
@@ -43,7 +52,11 @@ export const Login = () => {
         const result = await SendBackend.json();
   
         if (SendBackend.status === 200) {
-          alert(result);
+          Swal.fire(
+            'Exito',
+            'Welcome Teacher!',
+            'success'
+          );
           const data = {
             username,
             password
@@ -53,16 +66,29 @@ export const Login = () => {
           navigate("/teacherPublications");
 
         } else {
-          alert(result);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: result,
+          });
         }
 
       } else if (rol === "Administrador") {
         
         if (username === "admin" && password === "admin"){
-          alert("Welcome Admin!");
+          Swal.fire(
+            'Exito',
+            'Welcome Admin!',
+            'success'
+          );
           navigate("/admin");
         } else {
-          alert("User/Password Admin Wrong!!")
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "User/Password Admin Wrong!!",
+          });
+         
         }
 
       }
