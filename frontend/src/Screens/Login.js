@@ -60,7 +60,7 @@ export const Login = () => {
         
         if (username === "admin" && password === "admin"){
           alert("Welcome Admin!");
-        
+          navigate("/admin");
         } else {
           alert("User/Password Admin Wrong!!")
         }

@@ -1,11 +1,11 @@
 import React from 'react';
-import "./css/Login.css";
-import { useForm } from '../Hooks/useForm';
-import { AddTeacher } from '../Api/Routes';
+import './../css/Login.css'
+import { useForm } from '../../Hooks/useForm';
+// import { AddTeacher } from '../Api/Routes';
 import Swal from 'sweetalert2';
 import { useNavigate  } from "react-router-dom";
 
-export const RegistryTeacher = () => {
+export const DeleteTeacher = () => {
     const navigate = useNavigate();
     const [formValues, handleInputChange, reset] = useForm(
         {
@@ -25,18 +25,18 @@ export const RegistryTeacher = () => {
 
     const verifyUser = async () => {
         if (name !== "") {
-            let aux = `TO_DATE('${bornDate}','YYYY-MM-DD')`;
-            console.log(bornDate);
-            const SendBackend = await AddTeacher(name, lastname, phone, direction, email, password, aux, DPI);
-            await SendBackend.json();
+            // let aux = `TO_DATE('${bornDate}','YYYY-MM-DD')`;
+            // console.log(bornDate);
+            // const SendBackend = await AddTeacher(name, lastname, phone, direction, email, password, aux, DPI);
+            // await SendBackend.json();
 
-            if (SendBackend.status === 200) {
-                Swal.fire(
-                    'Exito',
-                    'Se ha registrado el nuevo maestro',
-                    'success'
-                );
-            } 
+            // if (SendBackend.status === 200) {
+            //     Swal.fire(
+            //         'Exito',
+            //         'Se ha registrado el nuevo maestro',
+            //         'success'
+            //     );
+            // } 
 
             reset();
         }
@@ -76,7 +76,7 @@ export const RegistryTeacher = () => {
                 Admin - Maestro
             </h3>
             <div className="animate__animated animate__bounceInLeft registryStudent">
-                <h2 id="headerTitle">Registro de Maestro</h2>
+                <h2 id="headerTitle">Eliminar Maestro</h2>
                 <div>
                     <div className="row">
                         <label>Nombre</label>
