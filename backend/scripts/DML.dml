@@ -276,3 +276,70 @@ BEGIN
     DELETE FROM MAESTRO WHERE DPI = pDpi;
 
 END delete_teacher;
+
+
+
+
+------------ INSERTAR UN CARRERA ------------
+DROP FUNCTION fn_search_carrera;
+CREATE OR REPLACE FUNCTION fn_search_carrera (pNombre IN CARRERA.NOMBRE%TYPE) RETURN CARRERA.NOMBRE%TYPE 
+IS vPass CARRERA.NOMBRE%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT nombre INTO vPass
+        FROM CARRERA
+        WHERE nombre = pNombre; 
+
+    RETURN vPass;
+END fn_search_carrera;
+
+
+DROP PROCEDURE insert_carrera;
+CREATE OR REPLACE PROCEDURE insert_carrera (pNombre IN CARRERA.nombre%TYPE) IS
+BEGIN
+-- Sentencias
+    INSERT INTO CARRERA (nombre) VALUES (pNombre);
+END insert_carrera;
+
+
+
+
+------------ ASSING UNA CARRERA STUDENT ------------
+-- CARRERA
+DROP FUNCTION fn_search_carrera_id;
+CREATE OR REPLACE FUNCTION fn_search_carrera_id (pNombre IN CARRERA.NOMBRE%TYPE) RETURN CARRERA.NOMBRE%TYPE 
+IS vPass CARRERA.NOMBRE%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT CARRERA.NOMBRE INTO vPass
+        FROM CARRERA
+        WHERE nombre = pNombre; 
+
+    RETURN vPass;
+END fn_search_carrera_id;
+
+
+DROP PROCEDURE carrera_student;
+CREATE OR REPLACE PROCEDURE carrera_student (pCarrera IN CARRERA.NOMBRE%TYPE, pCarnet IN ALUMNO.CARNET%TYPE) IS
+vAlumno  ALUMNO.ID_ALUMNO%TYPE;
+vCarrera CARRERA.ID_CARRERA%TYPE;
+BEGIN
+-- Sentencias
+    SELECT ALUMNO.ID_ALUMNO   INTO vAlumno  FROM ALUMNO  WHERE ALUMNO.CARNET  = pCarnet; 
+    SELECT CARRERA.ID_CARRERA INTO vCarrera FROM CARRERA WHERE CARRERA.NOMBRE = pCarrera; 
+
+    INSERT INTO dc_alumno (alumno_id_alumno, carrera_id_carrera) VALUES (vAlumno, vCarrera);
+END carrera_student;
+
+
+
+
+DROP PROCEDURE carrera_teacher;
+CREATE OR REPLACE PROCEDURE carrera_teacher (pNombre IN CARRERA.NOMBRE%TYPE, pMaestro IN MAESTRO.ID_MAESTRO%TYPE) IS
+BEGIN
+-- Sentencias
+    INSERT INTO dc_profesor (carrera_id_carrera, maestro_id_maestro) VALUES (pNombre, pMaestro);
+END carrera_teacher;
+
+SELECT nombre, fn_search_student_id('201800937') as func 
+FROM ALUMNO;

@@ -15,6 +15,9 @@ import { RegistryTeacher } from "./Screens/RegistryTeacher";
 import { UpdateTeacher } from "./Screens/teacherScreens/UpdateTeacher";
 import { DeleteTeacher } from "./Screens/teacherScreens/DeleteTeacher";
 
+import { RegestryCarrera } from "./Screens/AdminScreens/RegestryCarrera";
+import { AssignmentCarrera } from "./Screens/AdminScreens/AssignmentCarrera";
+
 /* Modulo Maestro */
 import { Publications } from "./Screens/teacherScreens/Publications.js";
 import { Activities } from "./Screens/teacherScreens/Activities.js";
@@ -41,6 +44,10 @@ render(
 
       <Route path="/updateStudent"        element={<UpdateStudent />} />
       <Route path="/deleteStudent"        element={<DeleteStudent />} />
+
+      <Route path="/regestryCarrera"      element={<RegestryCarrera />} />
+      <Route path="/assignmentCarrera"       element={<AssignmentCarrera />} />
+
     </Routes>
   </BrowserRouter>,
   document.getElementById("root")

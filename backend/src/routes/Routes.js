@@ -148,7 +148,85 @@ router.post('/deleteStudent', async (req, res)=>{
 })
 
 
+router.post('/regestryCarrera', async (req, res)=>{
 
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera('${req.body.nombre}'); END;`
+        console.log(sql)
+       
+        var result = await DB.Open(sql,[],false)
+        
+
+        res.status(404).send(JSON.stringify("Ya Existe esa Carrera!!"));
+        
+
+    } catch(e) {
+        
+        var sql = `BEGIN insert_carrera ('${req.body.nombre}'); END;`
+        var result = await DB.Open(sql,[],true)
+        
+
+        res.status(200).send(JSON.stringify(`Carrera Creada!!`));
+
+    }
+
+})
+
+
+
+
+router.post('/carreraStudent', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_student('${req.body.usuario}'); END;`       
+        var result = await DB.Open(sql,[],false)
+
+        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.nombre}'); END;`  
+        console.log(sql)     
+        result = await DB.Open(sql,[],false)
+        
+        sql = `BEGIN carrera_student('${req.body.nombre}',${req.body.usuario}); END;`  
+        console.log(sql)          
+        result = await DB.Open(sql,[],true)
+        console.log(result)
+
+
+        res.status(200).send(JSON.stringify("Asignacion Correcta de Estudiante!!"));
+        
+
+    } catch(e) {
+        
+        res.status(404).send(JSON.stringify(`No Existe esa Carrera/Estudiante!!`));
+
+    }
+
+})
+
+router.post('/carreraTeacher', async (req, res)=>{
+
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.nombre}'); END;`       
+        var result = await DB.Open(sql,[],false)
+        console.log(result)
+
+        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_student_id('${req.body.usuario}'); END;`       
+        result = await DB.Open(sql,[],false)
+        console.log(result)
+
+        res.status(200).send(JSON.stringify("Ya Existe esa Carrera!!"));
+        
+
+    } catch(e) {
+        
+        res.status(200).send(JSON.stringify(`Carrera Creada!!`));
+
+    }
+
+})
 
 
 
