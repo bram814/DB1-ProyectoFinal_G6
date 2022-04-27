@@ -40,18 +40,7 @@ router.post('/csvStudent', async (req, res)=>{
                
         }
     }
-    res.status(200).send(JSON.stringify('Csv Cargado'));
-
-  
-   
-    // id,Carnet,Nombre,Apellido,Telefono,Direccion,Correo,Contrasena
-
-
-  
-
-    // var result = await DB.Open(sql,[],true)
-
-    
+    res.status(200).send(JSON.stringify('Csv Cargado'));  
 
 })
 

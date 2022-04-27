@@ -75,8 +75,7 @@ export const RegistryStudent = () => {
 }
 
   const bulkLoad = async () => {
-    console.log(fileName)
-    console.log(fileContent)
+
     const SendBackend = await SetCsvStudent(fileName, fileContent);
     const result =  await SendBackend.json();
 
