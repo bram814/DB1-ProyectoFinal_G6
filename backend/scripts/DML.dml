@@ -105,6 +105,15 @@ BEGIN
 END update_alumno;
 
 
+--- DELETE STUDENT
+DROP PROCEDURE delete_student;
+CREATE OR REPLACE PROCEDURE delete_student(pCarnet IN ALUMNO.CARNET%TYPE) IS
+BEGIN
+-- Sentencias
+    DELETE FROM ALUMNO WHERE ALUMNO.CARNET = pCarnet;
+
+END delete_student;
+
 ------------ INSERTAR UN MAESTRO ------------
 DROP PROCEDURE insert_maestro;
 CREATE OR REPLACE PROCEDURE insert_maestro
@@ -256,3 +265,14 @@ BEGIN
     END IF;
 
 END update_teacher;
+
+
+-- DELETE TEACHER
+
+DROP PROCEDURE delete_teacher;
+CREATE OR REPLACE PROCEDURE delete_teacher(pDpi IN MAESTRO.DPI%TYPE) IS
+BEGIN
+-- Sentencias
+    DELETE FROM MAESTRO WHERE DPI = pDpi;
+
+END delete_teacher;

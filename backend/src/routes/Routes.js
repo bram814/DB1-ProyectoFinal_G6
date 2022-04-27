@@ -90,27 +90,64 @@ router.post('/updateStudent', async (req, res)=>{
 
 router.post('/updateTeacher', async (req, res)=>{
 
-    // try {
+    try {
 
         var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_teacher('${req.body.dpi}'); END;`
-        console.log(sql)
         var result = await DB.Open(sql,[],false)
 
-        if (req.body.fecha_nacimiento == "") {
-            console.log(result.rows)
-            // req.body.fecha_nacimiento = "\'\'";
-        }
         sql = `BEGIN update_teacher ( '${req.body.nombre}','${req.body.apellido}','${req.body.telefono}','${req.body.direccion}','${req.body.correo}','${req.body.password}','${req.body.fecha_nacimiento}','${req.body.dpi}'); END;`
-        console.log(sql)
         result = await DB.Open(sql,[],true)
 
         res.status(200).send(JSON.stringify(`Maestro Editado!!`));
-    // } catch(e) {
-    //     console.log(e)
-    //     res.status(404).send(JSON.stringify("No existe ese Maestro!!"));
-    // }
+
+    } catch(e) {
+
+        res.status(404).send(JSON.stringify("No existe ese Maestro!!"));
+    }
 
 })
+
+
+router.post('/deleteTeacher', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_teacher('${req.body.dpi}'); END;`
+        var result = await DB.Open(sql,[],false)
+
+        sql = `BEGIN delete_teacher ('${req.body.dpi}'); END;`
+        result = await DB.Open(sql,[],true)
+
+        res.status(200).send(JSON.stringify(`Maestro Eliminado!!`));
+
+    } catch(e) {
+
+        res.status(404).send(JSON.stringify("No existe ese Maestro!!"));
+    }
+
+})
+
+
+router.post('/deleteStudent', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_student('${req.body.carnet}'); END;`
+        var result = await DB.Open(sql,[],false)
+
+        sql = `BEGIN delete_student ('${req.body.carnet}'); END;`
+        result = await DB.Open(sql,[],true)
+
+        res.status(200).send(JSON.stringify(`Estudiante Eliminado!!`));
+
+    } catch(e) {
+
+        res.status(404).send(JSON.stringify("No existe ese Maestro!!"));
+    }
+
+})
+
+
 
 
 

@@ -25,22 +25,21 @@ export const UpdateTeacher = () => {
 
     const verifyUser = async () => {
 
-        console.log(bornDate);
         const SendBackend = await SetUpdateTeacher(name, lastname, phone, direction, email, password, bornDate, DPI);
 
         var result = await SendBackend.json();
         if(SendBackend.status === 200){
-        Swal.fire(
-            'Exito',
-            result,
-            'success'
-        );
+            Swal.fire(
+                'Exito',
+                result,
+                'success'
+            );
         } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: result,
-        });
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: result,
+            });
         }
 
         reset();
@@ -183,11 +182,7 @@ export const UpdateTeacher = () => {
                         />
                     </div>
                     <div id="button" className="row">
-                        <button
-                            onClick={verifyUser}
-                        >
-                            Registrar
-                        </button>
+                        <button onClick={verifyUser}> Editar </button>
                     </div>
                 </div>
             </div>
