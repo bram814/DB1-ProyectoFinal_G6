@@ -14,6 +14,66 @@ router.get('/', (req, res) => {
 });
 
 
+router.post('/csvStudent', async (req, res)=>{
+    var sql = ``
+    
+    var myArray  = req.body.data.split("\n");
+
+    var aux = myArray[0].split(',');
+
+    if (aux.length != 8) {
+        return res.status(402).send(JSON.stringify('false'));
+
+    }
+
+    for (var i = 1; i < myArray.length; i++) {
+
+        aux = myArray[i].split(',');
+        if (aux.length == 8) {
+            
+            sql = `BEGIN insert_alumno ( '${getComilla(aux[2])}','${getComilla(aux[3])}',${aux[1]},'${getComilla(aux[4])}','${getComilla(aux[5])}','${getComilla(aux[6])}','${getComilla(aux[7].split('\r')[0])}'); END;`
+            try {
+                var result = await DB.Open(sql,[],true)
+            } catch(e) {
+                console.log(e)
+            }
+               
+        }
+    }
+    res.status(200).send(JSON.stringify('Csv Cargado'));
+
+  
+   
+    // id,Carnet,Nombre,Apellido,Telefono,Direccion,Correo,Contrasena
+
+
+  
+
+    // var result = await DB.Open(sql,[],true)
+
+    
+
+})
+
+function getComilla (array) {
+    if (array.split("'").length != 1) {
+        var aux = ""
+        for (var i = 0; i < array.length; i++) {
+            aux += array[i]
+            if (array[i] == "'"){
+                aux += "'"
+            }
+            
+        }
+
+        return aux
+    }
+    
+    return array
+}
+
+
+
 router.post('/registryStudent', async (req, res)=>{
 
 
@@ -183,15 +243,11 @@ router.post('/carreraStudent', async (req, res)=>{
         var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_student('${req.body.usuario}'); END;`       
         var result = await DB.Open(sql,[],false)
 
-        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.nombre}'); END;`  
-        console.log(sql)     
+        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.nombre}'); END;`    
         result = await DB.Open(sql,[],false)
         
-        sql = `BEGIN carrera_student('${req.body.nombre}',${req.body.usuario}); END;`  
-        console.log(sql)          
+        sql = `BEGIN carrera_student('${req.body.nombre}',${req.body.usuario}); END;`         
         result = await DB.Open(sql,[],true)
-        console.log(result)
-
 
         res.status(200).send(JSON.stringify("Asignacion Correcta de Estudiante!!"));
         
@@ -212,15 +268,11 @@ router.post('/carreraTeacher', async (req, res)=>{
         var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_teacher('${req.body.maestro}'); END;`       
         var result = await DB.Open(sql,[],false)
 
-        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.carrera}'); END;`  
-        console.log(sql)     
+        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.carrera}'); END;`    
         result = await DB.Open(sql,[],false)
         
-        sql = `BEGIN carrera_teacher('${req.body.carrera}',${req.body.maestro}); END;`  
-        console.log(sql)          
+        sql = `BEGIN carrera_teacher('${req.body.carrera}',${req.body.maestro}); END;`          
         result = await DB.Open(sql,[],true)
-        console.log(result)
-
 
         res.status(200).send(JSON.stringify("Asignacion Correcta de Maestro!!"));
         

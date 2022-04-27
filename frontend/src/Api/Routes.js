@@ -74,3 +74,20 @@ export async function GetLoginTeacher(dpi, password){
         }),
     });
 }
+
+
+const url_csvStudent = `${BACKEND}/csvStudent`;
+
+export async function SetCsvStudent(name, info){
+    return fetch(url_csvStudent, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nombre  : name,
+            data    : info
+        }),
+    });
+}

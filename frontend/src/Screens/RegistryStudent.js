@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import "./css/Login.css";
 import { useForm } from '../Hooks/useForm';
-import { AddStudent } from '../Api/Routes';
+import { AddStudent, SetCsvStudent } from '../Api/Routes';
 import Swal from 'sweetalert2';
 import { useNavigate  } from "react-router-dom";
 
 export const RegistryStudent = () => {
+
+  const [fileName, setFileName] = useState("");
+  const [fileContent, setFileContent] = useState("");
+  
   const navigate = useNavigate();
   const [ formValues, handleInputChange, reset ] = useForm(
     {
@@ -15,7 +19,9 @@ export const RegistryStudent = () => {
       phone: "",
       direction: "",
       email: "",
-      password: ""
+      password: "",
+      profilePicture: "",
+
     }
   );
   const {name, lastname, carne, phone, direction, email, password} = formValues;
@@ -42,8 +48,53 @@ export const RegistryStudent = () => {
     }
   };
 
-  const bulkLoad = () => {
+  const readFile = (e) => {
+    try{
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsText(file);
+      reader.onload = () => {
+          setFileName(file.name);
+          setFileContent(reader.result)
+          
+          Swal.fire(
+            'Exito',
+            "Csv Cargado",
+            'success'
+          );
+      }
+  }catch(error){
 
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error,
+      });
+
+  }
+}
+
+  const bulkLoad = async () => {
+    console.log(fileName)
+    console.log(fileContent)
+    const SendBackend = await SetCsvStudent(fileName, fileContent);
+    const result =  await SendBackend.json();
+
+    if (SendBackend.status === 200){
+      Swal.fire(
+        'Exito',
+        result,
+        'success'
+      );
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: result,
+      });
+    }
+    
+    reset();
   };
 
   return (
@@ -145,6 +196,17 @@ export const RegistryStudent = () => {
             >
               Registrar
             </button>
+            <div className="custom-input-file col-md-6 col-sm-6 col-xs-6">
+              <input 
+                  type="file" 
+                  id="fichero-tarifas" 
+                  className="input-file"
+                  placeholder="Seleccione un archivo"
+                  multiple={false}
+                  onChange={readFile}
+              />
+                  Agregar Mediante CSV...
+          </div>
             <button className='bulkLoad'
               onClick={bulkLoad}
             >
