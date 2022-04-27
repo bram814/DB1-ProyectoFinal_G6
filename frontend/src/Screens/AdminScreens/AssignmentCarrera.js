@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './../css/Login.css'
 import { useForm } from '../../Hooks/useForm';
-import { SetCarreraStudent } from '../../Api/ModAdministrador';
+import { SetCarreraStudent, SetCarreraTeacher } from '../../Api/ModAdministrador';
 import Swal from 'sweetalert2';
 import { useNavigate  } from "react-router-dom";
 import Combobox from "react-widgets/Combobox";
@@ -40,7 +40,26 @@ export const AssignmentCarrera = () => {
           });
       }
 
-    } else {
+    } else if (rol === "Maestro" && (Name !== "" && User !== "")) {
+
+      const SendBackend = await SetCarreraTeacher(Name, User);
+
+      var result = await SendBackend.json();
+      if(SendBackend.status === 200){
+          Swal.fire(
+              'Exito',
+              result,
+              'success'
+          );
+      } else {
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: result,
+          });
+      }
+
+    }else {
         Swal.fire({
             icon: 'error',
             title: 'Oops...',

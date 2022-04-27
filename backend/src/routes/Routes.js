@@ -209,20 +209,25 @@ router.post('/carreraTeacher', async (req, res)=>{
 
     try {
 
-        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.nombre}'); END;`       
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_teacher('${req.body.maestro}'); END;`       
         var result = await DB.Open(sql,[],false)
-        console.log(result)
 
-        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_student_id('${req.body.usuario}'); END;`       
+        sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_carrera_id('${req.body.carrera}'); END;`  
+        console.log(sql)     
         result = await DB.Open(sql,[],false)
+        
+        sql = `BEGIN carrera_teacher('${req.body.carrera}',${req.body.maestro}); END;`  
+        console.log(sql)          
+        result = await DB.Open(sql,[],true)
         console.log(result)
 
-        res.status(200).send(JSON.stringify("Ya Existe esa Carrera!!"));
+
+        res.status(200).send(JSON.stringify("Asignacion Correcta de Maestro!!"));
         
 
     } catch(e) {
         
-        res.status(200).send(JSON.stringify(`Carrera Creada!!`));
+        res.status(404).send(JSON.stringify(`No Existe esa Carrera/Maestro!!`));
 
     }
 

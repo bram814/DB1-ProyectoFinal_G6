@@ -110,8 +110,8 @@ export async function SetCarreraTeacher(name, user){
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            nombre              : name,
-            usuario             : user
+            carrera              : name,
+            maestro              : user
         }),
     });
 }
