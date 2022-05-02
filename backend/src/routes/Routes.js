@@ -61,8 +61,6 @@ function getComilla (array) {
     return array
 }
 
-
-
 router.post('/registryStudent', async (req, res)=>{
 
 
@@ -82,7 +80,6 @@ router.post('/registryTeacher', async (req, res)=>{
 
 })
 
-
 router.post('/loginStudent', async (req, res)=>{
 
     try{
@@ -99,7 +96,6 @@ router.post('/loginStudent', async (req, res)=>{
     
 
 })
-
 
 router.post('/loginTeacher', async (req, res)=>{
 
@@ -156,7 +152,6 @@ router.post('/updateTeacher', async (req, res)=>{
 
 })
 
-
 router.post('/deleteTeacher', async (req, res)=>{
 
     try {
@@ -176,7 +171,6 @@ router.post('/deleteTeacher', async (req, res)=>{
 
 })
 
-
 router.post('/deleteStudent', async (req, res)=>{
 
     try {
@@ -195,7 +189,6 @@ router.post('/deleteStudent', async (req, res)=>{
     }
 
 })
-
 
 router.post('/regestryCarrera', async (req, res)=>{
 
@@ -221,9 +214,6 @@ router.post('/regestryCarrera', async (req, res)=>{
     }
 
 })
-
-
-
 
 router.post('/carreraStudent', async (req, res)=>{
 
@@ -274,6 +264,21 @@ router.post('/carreraTeacher', async (req, res)=>{
 
 })
 
+router.get('/getPublicaciones', async ( req, res ) => {
+    try{
+        let sel2 = "SELECT * FROM ALUMNO";
+        let sql = `SELECT * FROM D_publicacion
+        inner join Maestro on Maestro.id_maestro = Maestro_id_maestro
+        inner join Publicacion p on publicacion_id_publicaicon = p.id_publicacion
+        inner join Materia M on M.id_materia = Materia_id_materia`;
+        let result = await DB.Open(sel2,[],false);
+        console.log(result);
+
+    } catch(e) {
+        console.log(e);
+        res.status(404).send(JSON.stringify(`No existe la base de datos solicitada`));
+    }
+});
 
 
 

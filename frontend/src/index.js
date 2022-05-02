@@ -46,7 +46,7 @@ render(
       <Route path="/deleteStudent"        element={<DeleteStudent />} />
 
       <Route path="/regestryCarrera"      element={<RegestryCarrera />} />
-      <Route path="/assignmentCarrera"       element={<AssignmentCarrera />} />
+      <Route path="/assignmentCarrera"    element={<AssignmentCarrera />} />
 
     </Routes>
   </BrowserRouter>,
