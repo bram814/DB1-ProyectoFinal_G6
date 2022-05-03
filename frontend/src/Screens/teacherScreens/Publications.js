@@ -1,16 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import "../css/Buttons.css";
 import "../css/Publications.css";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AccordionTotal } from './components/AccordionTotal';
 import Swal from 'sweetalert2';
-import { getCoursesTeacher, getPublicationsTeacer } from "../../Api/ModTeacher.js";
+import { getCoursesTeacher, getPublicationsTeacher } from "../../Api/ModTeacher.js";
+
+const dataPubs =
+  [
+    {
+      key: 1, //Identificador de la publicacion
+      title: "Titulo1",  //Titulo de la publicacion
+      course: "Matematicas", //Curso de la materia
+      publish_date: "10/12/2022", //Fecha de publicacion
+      hour_begin: "15", // Hora de inicio
+      hour_final: "17" //Hora de finalizacion
+    }, {
+      key: 2,
+      title: "Titulo2",
+      course: "Matematicas",
+      publish_date: "10/12/2022",
+      hour_begin: "15",
+      hour_final: "17"
+    }, {
+      key: 3,
+      title: "Titulo3",
+      course: "Matematicas",
+      publish_date: "10/12/2022",
+      hour_begin: "15",
+      hour_final: "17"
+    }
+  ];
+
+const dataCourses = [
+  {
+    id: 1,
+    name: "Matematica"
+  }, {
+    id: 2,
+    name: "Quimica"
+  }, {
+    id: 3,
+    name: "Ipc"
+  }
+];
 
 export const Publications = () => {
   const navigate = useNavigate();
-  const [profile, setProfile] = useState(""); 
-  const [pubs, setPubs] = useState([]);
-  const [courses, setCourses] = useState([]);
+  const [profile, setProfile] = useState("");
+  const [pubs, setPubs] = useState(dataPubs);
+  const [courses, setCourses] = useState(dataCourses);
   const [nameUser, setNameUser] = useState([]);
 
   // useEffect(async () => {
@@ -27,8 +66,8 @@ export const Publications = () => {
 
   useEffect(() => {
     (async () => {
-      if (nameUser == null){
-          setNameUser(data.username)
+      if (nameUser == null) {
+        setNameUser(data.username)
       }
       const profile = localStorage.getItem("teacherProfile");
       const initialValue = JSON.parse(profile);
@@ -36,13 +75,13 @@ export const Publications = () => {
         username: initialValue.username || "",
         password: initialValue.password || ""
       }
-      const materias =  await getCoursesTeacher(data.username)
-      setCourses(await materias.json())
-      
+      //const materias =  await getCoursesTeacher(data.username)
+      //setCourses(await materias.json())
+
     })()
   }, [])
 
-  const closeSession =  () => {
+  const closeSession = () => {
     const data = {
       username: "",
       password: ""
@@ -58,7 +97,7 @@ export const Publications = () => {
       html:
         '<h2>Titulo:</h2>' +
         '<input id="swal-input1" class="swal2-input">' +
-        '<h2>Descripcion:</h2>'+
+        '<h2>Descripcion:</h2>' +
         '<textarea id="swal-input2" class="swal2-input">',
       focusConfirm: false,
       preConfirm: () => {
@@ -69,12 +108,12 @@ export const Publications = () => {
       }
     });
 
-    if(!formValues) return;
-    
+    if (!formValues) return;
+
     //Armamos el objeto de opciones
     let options = {};
-    for(let option of courses){
-        options[option.id] = option.name;
+    for (let option of courses) {
+      options[option.id] = option.name;
     }
     //Obtenemos la información de la materia de la nueva publicacion mediante sweetAlert2
     const { value: course } = await Swal.fire({
@@ -101,16 +140,16 @@ export const Publications = () => {
       console.log(course)
       console.log(nameUser)
       const newPublication = {
-        key: pubs[pubs.length-1].key+1,
+        key: pubs[pubs.length - 1].key + 1,
         title: formValues[0],
         course: options[course],    //Course es el id de la materia
         description: formValues[1],
         date: "Fecha random"
       }
       setPubs([...pubs, newPublication]);
-      Swal.fire(  'Éxito',
-      'Se ha agregado la nueva publicación',
-      'success')
+      Swal.fire('Éxito',
+        'Se ha agregado la nueva publicación',
+        'success')
     }
   }
 
@@ -135,14 +174,14 @@ export const Publications = () => {
   }
 
   const editItem = async (id) => {
-    const value = pubs.filter(dato=>dato.key===id);
+    const value = pubs.filter(dato => dato.key === id);
     const { title, description } = value[0];
     const { value: formValues } = await Swal.fire({
       title: 'Ingrese los nuevos valores de su publicación',
       html:
         '<h2>Titulo:</h2>' +
         `<input id="swal-input1" class="swal2-input" value=${title}>` +
-        '<h2>Descripcion:</h2>'+
+        '<h2>Descripcion:</h2>' +
         `<textarea id="swal-input2" class="swal2-input">${description}</textarea>`,
       focusConfirm: false,
       preConfirm: () => {
@@ -152,19 +191,19 @@ export const Publications = () => {
         ]
       }
     })
-    
+
     if (formValues) {
       const newPublication = {
-        key: pubs[pubs.length-1].key+1,
+        key: pubs[pubs.length - 1].key + 1,
         title: formValues[0],
         description: formValues[1],
         date: "Fecha random"
       }
       console.log(newPublication);
       //setPubs([...pubs, newPublication]); Aqui se hace el update
-      Swal.fire(  'Good job!',
-      'You clicked the button!',
-      'success')
+      Swal.fire('Good job!',
+        'You clicked the button!',
+        'success')
     }
   }
 
@@ -192,7 +231,7 @@ export const Publications = () => {
         Publicaciones realizadas
       </h1>
       <div className="container accordionPublications">
-        <AccordionTotal data={pubs} deleteItem={deleteItem} editItem={editItem} nameItem="publicacion"/>
+        <AccordionTotal data={pubs} deleteItem={deleteItem} editItem={editItem} nameItem="publicacion" />
       </div>
       <button onClick={addPublication} className="btn btn-success button-75 animate__animated animate__fadeInTopLeft">
         Agregar publicacion

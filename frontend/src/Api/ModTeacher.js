@@ -41,3 +41,22 @@ export async function getActivitiesTeacher(dpi){
         }),
     });
 }
+
+const url_updatePublicationTeacher = `${BACKEND}/updatePublicationTeacher`;
+export async function updatePublicationTeacher(key, title, course, publish_date, hour_begin, hour_final){
+    return fetch(url_updatePublicationTeacher, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            key:            key,
+            title:          title,
+            course:         course,
+            publish_date:   publish_date,
+            hour_begin:     hour_begin,
+            hour_final:     hour_final
+        }),
+    });
+}

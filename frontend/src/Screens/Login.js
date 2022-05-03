@@ -78,7 +78,7 @@ export const Login = () => {
         if (username === "admin" && password === "admin"){
           Swal.fire(
             'Exito',
-            'Welcome Admin!',
+            'Bienvenido administrador!',
             'success'
           );
           navigate("/admin");
