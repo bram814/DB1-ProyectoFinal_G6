@@ -4,47 +4,15 @@ import "../css/Publications.css";
 import { useNavigate  } from "react-router-dom";
 import { AccordionTotal } from './components/AccordionTotal';
 import Swal from 'sweetalert2';
-
-const dataPrueba = [
-  {
-    key: 1,
-    title: "Titulo1",
-    description: "Descripcion 1",
-    course: "Matematica",
-    date: "10/12/2022"
-  },{
-    key: 2,
-    title: "Titulo2",
-    description: "Descripcion 2",
-    course: "Matematica",
-    date: "10/12/2022"    
-  },{
-    key: 3,
-    title: "Titulo3",
-    description: "Descripcion 3",
-    course: "Matematica",
-    date: "10/12/2022"
-  }
-];
-
-const dataCourses = [
-  {
-    id: 2,
-    name: "Matematica"
-  },{
-    id: 3,
-    name: "Quimica"
-  },{
-    id: 4,
-    name: "Ipc"
-  }
-];
+import { getCoursesTeacher, getPublicationsTeacer } from "../../Api/ModTeacher.js";
 
 export const Publications = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(""); 
-  const [pubs, setPubs] = useState(dataPrueba);
-  useEffect(() => {
+  const [pubs, setPubs] = useState([]);
+  const [courses, setCourses] = useState([]);
+
+  useEffect(async () => {
     const profile = localStorage.getItem("teacherProfile");
     const initialValue = JSON.parse(profile);
     const data = {
@@ -52,6 +20,8 @@ export const Publications = () => {
       password: initialValue.password || ""
     }
     setProfile(data);
+    setPubs( await getCoursesTeacher(data.username));
+    setCourses(await getPublicationsTeacer(data.username));
   }, []);
 
   const closeSession =  () => {
@@ -85,7 +55,7 @@ export const Publications = () => {
     
     //Armamos el objeto de opciones
     let options = {};
-    for(let option of dataCourses){
+    for(let option of courses){
         options[option.id] = option.name;
     }
     //Obtenemos la información de la materia de la nueva publicacion mediante sweetAlert2
