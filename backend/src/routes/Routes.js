@@ -44,6 +44,36 @@ router.post('/csvStudent', async (req, res)=>{
 
 })
 
+router.post('/csvTeacher', async (req, res)=>{
+    var sql = ``
+    
+    var myArray  = req.body.data.split("\n");
+
+    var aux = myArray[0].split(',');
+
+    if (aux.length != 9) {
+        return res.status(402).send(JSON.stringify('false'));
+
+    }
+
+    for (var i = 1; i < myArray.length; i++) {
+
+        aux = myArray[i].split(',');
+        if (aux.length == 9) {
+
+            sql = `BEGIN insert_maestro ( '${getComilla(aux[1])}','${getComilla(aux[2])}','${getComilla(aux[3])}','${getComilla(aux[4])}','${getComilla(aux[5])}','${getComilla(aux[8].split('\r')[0])}', TO_DATE('${getComilla(aux[6])}','MM-DD-YYYY'),'${getComilla(aux[7])}'); END;`
+            try {
+                var result = await DB.Open(sql,[],true)
+            } catch(e) {
+                console.log(e)
+            }
+               
+        }
+    }
+    res.status(200).send(JSON.stringify('Csv Cargado'));  
+
+})
+
 function getComilla (array) {
     if (array.split("'").length != 1) {
         var aux = ""
@@ -264,6 +294,77 @@ router.post('/carreraTeacher', async (req, res)=>{
 
 })
 
+router.post('/regestryMateria', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_materia('${req.body.nombre}'); END;`
+        console.log(sql)
+       
+        var result = await DB.Open(sql,[],false)
+        
+
+        res.status(404).send(JSON.stringify("Ya Existe esa Materia!!"));
+        
+
+    } catch(e) {
+        
+        var sql = `BEGIN insert_materia ('${req.body.nombre}'); END;`
+        var result = await DB.Open(sql,[],true)
+        
+
+        res.status(200).send(JSON.stringify(`Materia Creada!!`));
+
+    }
+
+})
+
+router.post('/materiaStudent', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_materia('${req.body.nombre}'); END;`
+
+        var result = await DB.Open(sql,[],false)
+        
+        sql = `BEGIN materia_student('${req.body.nombre}',${req.body.usuario}); END;`  
+        console.log(sql)       
+        result = await DB.Open(sql,[],true)
+
+        res.status(200).send(JSON.stringify("Asignacion Correcta de Materia a Estudiante!!"));
+        
+
+    } catch(e) {
+        
+        res.status(404).send(JSON.stringify(`No Existe esa Materia/Estudiante!!`));
+
+    }
+
+})
+
+router.post('/materiaTeacher', async (req, res)=>{
+
+    try {
+
+        var sql = `DECLARE v_fn varchar2(50 char); \n BEGIN v_fn := fn_search_materia('${req.body.nombre}'); END;`
+
+        var result = await DB.Open(sql,[],false)
+        
+        sql = `BEGIN materia_teacher('${req.body.nombre}',${req.body.usuario}); END;`  
+        console.log(sql)       
+        result = await DB.Open(sql,[],true)
+
+        res.status(200).send(JSON.stringify("Asignacion Correcta de Materia a Estudiante!!"));
+        
+
+    } catch(e) {
+        
+        res.status(404).send(JSON.stringify(`No Existe esa Materia/Estudiante!!`));
+
+    }
+
+})
+
 router.get('/getPublicaciones', async ( req, res ) => {
     try{
         let sel2 = "SELECT * FROM ALUMNO";
@@ -279,7 +380,6 @@ router.get('/getPublicaciones', async ( req, res ) => {
         res.status(404).send(JSON.stringify(`No existe la base de datos solicitada`));
     }
 });
-
 
 
 module.exports = router;

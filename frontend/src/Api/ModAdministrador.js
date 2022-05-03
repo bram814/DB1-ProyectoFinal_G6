@@ -7,8 +7,14 @@ const url_updateTeacher = `${BACKEND}/updateTeacher`;
 const url_deleteTeacher = `${BACKEND}/deleteTeacher`;
 /* CARRERA */
 const url_regestryCarrera = `${BACKEND}/regestryCarrera`;
-const url_carreraStudent = `${BACKEND}/carreraStudent`;
-const url_carreraTeacher = `${BACKEND}/carreraTeacher`;
+const url_carreraStudent  = `${BACKEND}/carreraStudent`;
+const url_carreraTeacher  = `${BACKEND}/carreraTeacher`;
+/* MATERIA */
+const url_regestryMateria = `${BACKEND}/regestryMateria`;
+const url_materiaStudent  = `${BACKEND}/materiaStudent`;
+const url_materiaTeacher  = `${BACKEND}/materiaTeacher`;
+
+
 
 export async function SetUpdateStudent(name, lastname, carnet, phone, direction, email, password){
     return fetch(url_updateStudent, {
@@ -112,6 +118,48 @@ export async function SetCarreraTeacher(name, user){
         body: JSON.stringify({
             carrera              : name,
             maestro              : user
+        }),
+    });
+}
+
+
+export async function AddMateria(name){
+    return fetch(url_regestryMateria, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nombre              : name
+        }),
+    });
+}
+
+export async function SetMateriaStudent(name, user){
+    return fetch(url_materiaStudent, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nombre              : name,
+            usuario             : user
+        }),
+    });
+}
+
+export async function SetMateriaTeacher(name, user){
+    return fetch(url_materiaTeacher, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nombre              : name,
+            usuario             : user
         }),
     });
 }

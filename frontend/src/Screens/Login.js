@@ -109,7 +109,7 @@ export const Login = () => {
           <input
             name="username"
             type="text"
-            placeholder="Nombre de usuario"
+            placeholder="Carnet/DPI"
             value={username}
             onChange={handleInputChange}
           />

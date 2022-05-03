@@ -18,6 +18,9 @@ import { DeleteTeacher } from "./Screens/teacherScreens/DeleteTeacher";
 import { RegestryCarrera } from "./Screens/AdminScreens/RegestryCarrera";
 import { AssignmentCarrera } from "./Screens/AdminScreens/AssignmentCarrera";
 
+import { RegestryMateria } from "./Screens/AdminScreens/RegestryMateria";
+import { AssignmentMateria } from "./Screens/AdminScreens/AssignmentMateria";
+
 /* Modulo Maestro */
 import { Publications } from "./Screens/teacherScreens/Publications.js";
 import { Activities } from "./Screens/teacherScreens/Activities.js";
@@ -47,6 +50,9 @@ render(
 
       <Route path="/regestryCarrera"      element={<RegestryCarrera />} />
       <Route path="/assignmentCarrera"    element={<AssignmentCarrera />} />
+
+      <Route path="/regestryMateria"      element={<RegestryMateria />} />
+      <Route path="/assignmentMateria"    element={<AssignmentMateria />} />
 
     </Routes>
   </BrowserRouter>,

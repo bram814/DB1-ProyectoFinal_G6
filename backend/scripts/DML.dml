@@ -344,3 +344,53 @@ BEGIN
     INSERT INTO dc_profesor (carrera_id_carrera, maestro_id_maestro) VALUES (vCarrera, vMaestro);
 
 END carrera_teacher;
+
+
+------------ INSERTAR UNA MATERIA ------------
+DROP FUNCTION fn_search_materia;
+CREATE OR REPLACE FUNCTION fn_search_materia (pNombre IN MATERIA.NOMBRE%TYPE) RETURN MATERIA.NOMBRE%TYPE 
+IS vPass MATERIA.NOMBRE%TYPE; 
+--Declaración de variables locales
+BEGIN
+        SELECT nombre INTO vPass
+        FROM MATERIA
+        WHERE nombre = pNombre; 
+
+    RETURN vPass;
+END fn_search_materia;
+
+
+DROP PROCEDURE insert_materia;
+CREATE OR REPLACE PROCEDURE insert_materia (pNombre IN MATERIA.nombre%TYPE) IS
+BEGIN
+-- Sentencias
+    INSERT INTO MATERIA (nombre) VALUES (pNombre);
+END insert_materia;
+
+
+
+-- ALUMNO - INSERTAR MATERIA
+DROP PROCEDURE materia_student;
+CREATE OR REPLACE PROCEDURE materia_student (pMateria IN MATERIA.NOMBRE%TYPE, pCarnet IN ALUMNO.CARNET%TYPE) IS
+vAlumno  ALUMNO.ID_ALUMNO%TYPE;
+vMateria MATERIA.ID_MATERIA%TYPE;
+BEGIN
+-- Sentencias
+    SELECT ALUMNO.ID_ALUMNO   INTO vAlumno  FROM ALUMNO  WHERE ALUMNO.CARNET  = pCarnet; 
+    SELECT MATERIA.ID_MATERIA INTO vMateria FROM MATERIA WHERE MATERIA.NOMBRE = pMateria; 
+
+    INSERT INTO asig_estudiante (alumno_id_alumno, materia_id_materia) VALUES (vAlumno, vMateria);
+END materia_student;
+
+-- MAESTRO - INSERTAR MATERIA
+DROP PROCEDURE materia_teacher;
+CREATE OR REPLACE PROCEDURE materia_teacher (pMateria IN MATERIA.NOMBRE%TYPE, pDpi IN MAESTRO.DPI%TYPE) IS
+vMaestro  MAESTRO.ID_MAESTRO%TYPE;
+vMateria MATERIA.ID_MATERIA%TYPE;
+BEGIN
+-- Sentencias
+    SELECT MAESTRO.ID_MAESTRO INTO vMaestro  FROM MAESTRO  WHERE MAESTRO.DPI  = pDpi; 
+    SELECT MATERIA.ID_MATERIA INTO vMateria FROM MATERIA WHERE MATERIA.NOMBRE = pMateria; 
+
+    INSERT INTO asignacion_maestro (maestro_id_maestro, materia_id_materia) VALUES (vMaestro, vMateria);
+END materia_teacher;

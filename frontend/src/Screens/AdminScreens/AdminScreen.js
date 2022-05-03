@@ -19,6 +19,9 @@ export const AdminScreen = () => {
       <button onClick={() => navigate("/regestryCarrera")} className="btn btn-success button-74 animate__animated animate__fadeInTopLeft">
         Carrera
       </button>
+      <button onClick={() => navigate("/regestryMateria")} className="btn btn-success button-74 animate__animated animate__fadeInTopLeft">
+        Materia
+      </button>
       <button onClick={() => navigate("/login")} className="btn btn-success button-75 animate__animated animate__fadeInTopLeft">
         Cerrar sesion
       </button>

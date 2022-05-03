@@ -91,3 +91,19 @@ export async function SetCsvStudent(name, info){
         }),
     });
 }
+
+const url_csvTeacher = `${BACKEND}/csvTeacher`;
+
+export async function SetCsvTeacher(name, info){
+    return fetch(url_csvTeacher, {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nombre  : name,
+            data    : info
+        }),
+    });
+}
