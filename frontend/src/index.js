@@ -28,6 +28,8 @@ import { Exams } from "./Screens/teacherScreens/Exams.js";
 import { Students } from "./Screens/teacherScreens/Students.js";
 import { App } from "./App";
 import { AdminScreen } from "./Screens/AdminScreens/AdminScreen";
+import { ModTeacherRegistryStudent } from "./Screens/teacherScreens/ModTeacherRegistryStudent";
+
 
 render(
   <BrowserRouter>
@@ -53,6 +55,7 @@ render(
 
       <Route path="/regestryMateria"      element={<RegestryMateria />} />
       <Route path="/assignmentMateria"    element={<AssignmentMateria />} />
+      <Route path="/modTeacherRegistryStudent"    element={<ModTeacherRegistryStudent />} />
 
     </Routes>
   </BrowserRouter>,

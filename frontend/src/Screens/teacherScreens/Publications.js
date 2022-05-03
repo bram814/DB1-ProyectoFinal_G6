@@ -11,6 +11,7 @@ export const Publications = () => {
   const [profile, setProfile] = useState(""); 
   const [pubs, setPubs] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [nameUser, setNameUser] = useState([]);
 
   // useEffect(async () => {
   //   const profile = localStorage.getItem("teacherProfile");
@@ -26,6 +27,9 @@ export const Publications = () => {
 
   useEffect(() => {
     (async () => {
+      if (nameUser == null){
+          setNameUser(data.username)
+      }
       const profile = localStorage.getItem("teacherProfile");
       const initialValue = JSON.parse(profile);
       const data = {
@@ -92,6 +96,10 @@ export const Publications = () => {
 
     //Verificamos que se haya ingresado ambos campos
     if (formValues && course) {
+      console.log(formValues[0])
+      console.log(formValues[1])
+      console.log(course)
+      console.log(nameUser)
       const newPublication = {
         key: pubs[pubs.length-1].key+1,
         title: formValues[0],
@@ -171,7 +179,7 @@ export const Publications = () => {
       <button onClick={() => navigate("/teacherExams")} className="btn btn-success button-74 animate__animated animate__fadeInTopLeft">
         Examenes
       </button>
-      <button onClick={() => navigate("/teacherStudents")} className="btn btn-success button-74 animate__animated animate__fadeInTopLeft">
+      <button onClick={() => navigate("/modTeacherRegistryStudent")} className="btn btn-success button-74 animate__animated animate__fadeInTopLeft">
         Estudiantes
       </button>
       <button onClick={closeSession} className="btn btn-success button-75 animate__animated animate__fadeInTopLeft">
