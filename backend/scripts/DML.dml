@@ -394,3 +394,10 @@ BEGIN
 
     INSERT INTO asignacion_maestro (maestro_id_maestro, materia_id_materia) VALUES (vMaestro, vMateria);
 END materia_teacher;
+
+-- CONSULTA MAESTRO - MATERIA
+SELECT m.id_materia, m.nombre FROM
+    asignacion_maestro am
+        INNER JOIN MAESTRO p ON p.id_maestro = am.maestro_id_maestro
+        INNER JOIN MATERIA m ON m.id_materia = am.materia_id_materia
+        WHERE p.dpi = '4805650000000';

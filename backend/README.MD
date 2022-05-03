@@ -110,6 +110,8 @@ EXCEPTION
 -- Sentencias control de excepcion
 END nombre_procedimiento;
 
+
+```
 Cuando crea un procedimiento o una función, puede definir parámetros. Hay tres tipos de parámetros que se pueden declarar:
 
 1) Parámetro de tipo IN: Estos tipos de parámetros se utilizan para enviar valores a procedimientos almacenados por lo tanto su valor de parámetro no puede ser reemplazado.
@@ -117,7 +119,6 @@ Cuando crea un procedimiento o una función, puede definir parámetros. Hay tres
 2) Parámetro de tipo OUT: Estos tipos de parámetros se utilizan para obtener valores de los procedimientos almacenados. Por consiguiente es similar a un tipo de retorno en funciones.
 
 3) Parámetro IN OUT: Estos tipos de parámetros se utilizan para enviar valores aunque también para obtener valores en los procedimientos almacenados
-```
 
 ### Llamada de un procedimiento almacenado
 

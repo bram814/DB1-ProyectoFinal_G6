@@ -381,5 +381,39 @@ router.get('/getPublicaciones', async ( req, res ) => {
     }
 });
 
+router.post('/getMateriasProfesor', async (req, res)=>{
+
+    try {
+
+        var sql = ``;
+        sql += `SELECT m.id_materia, m.nombre\n`  
+        sql += `FROM asignacion_maestro am\n`
+        sql += `INNER JOIN MAESTRO p ON p.id_maestro = am.maestro_id_maestro\n`
+        sql += `INNER JOIN MATERIA m ON m.id_materia = am.materia_id_materia\n`
+        sql += `WHERE p.dpi = '${req.body.dpi}'`
+
+        console.log(sql)
+        var result = await DB.Open(sql,[],false)
+        console.log(result.rows)
+        const data = []
+
+        for (var i = 0; i < result.rows.length; i++) {
+            console.log(result.rows[i])
+            data.push({id:result.rows[i][0],name:result.rows[i][1]})
+        }
+
+        console.log(data)
+
+        res.status(200).send(JSON.stringify(data));
+        
+
+    } catch(e) {
+        console.log(e)
+        res.status(404).send(JSON.stringify(`No Existe esa Materia/Estudiante!!`));
+
+    }
+
+})
+
 
 module.exports = router;
