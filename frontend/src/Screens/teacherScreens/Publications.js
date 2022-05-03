@@ -12,17 +12,31 @@ export const Publications = () => {
   const [pubs, setPubs] = useState([]);
   const [courses, setCourses] = useState([]);
 
-  useEffect(async () => {
-    const profile = localStorage.getItem("teacherProfile");
-    const initialValue = JSON.parse(profile);
-    const data = {
-      username: initialValue.username || "",
-      password: initialValue.password || ""
-    }
-    setProfile(data);
-    setPubs( await getCoursesTeacher(data.username));
-    setCourses(await getPublicationsTeacer(data.username));
-  }, []);
+  // useEffect(async () => {
+  //   const profile = localStorage.getItem("teacherProfile");
+  //   const initialValue = JSON.parse(profile);
+  //   const data = {
+  //     username: initialValue.username || "",
+  //     password: initialValue.password || ""
+  //   }
+  //   setProfile(data);
+  //   setPubs( await getCoursesTeacher(data.username));
+  //   setCourses(await getPublicationsTeacer(data.username));
+  // }, []);
+
+  useEffect(() => {
+    (async () => {
+      const profile = localStorage.getItem("teacherProfile");
+      const initialValue = JSON.parse(profile);
+      const data = {
+        username: initialValue.username || "",
+        password: initialValue.password || ""
+      }
+      const materias =  await getCoursesTeacher(data.username)
+      setCourses(await materias.json())
+      
+    })()
+  }, [])
 
   const closeSession =  () => {
     const data = {
